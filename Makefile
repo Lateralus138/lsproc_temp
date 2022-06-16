@@ -64,7 +64,7 @@ STFLAG = -static -static-libgcc -static-libstdc++
 
 all: releasedynamicall
 
-releasedynamicall: buildallobjects buildarchive builddirectories cleanreleasedynamic
+releasedynamicall: buildincdir buildlibdir buildreldyndir buildlibs cleanreleasedynamic
 	@echo Building dynamic executable
 	$(CXX) $(GTKINC) $(LDFLAG) $(SRCFLS) -o $(TGTDYN) $(LDLIBS) $(GTKLIB)
 
@@ -118,7 +118,7 @@ android64dynamic: cleanandroid64dynamic builddirectories
 	@echo Building Android 64 bit executable
 	$(AND64GXX) $(ANDFLG) $(SRCFLS) -o $(ANDDYN64)
 
-debugdynamicall: buildallobjects buildarchive builddirectories cleandebugdynamic
+debugdynamicall: buildincdir buildlibdir builddbgdyndir buildlibs cleandebugdynamic
 	@echo Building debug executable
 	$(CXX) $(GTKINC) -I$(INCDIR) -std=c++17 $(DBGFLG) $(SRCFLS) -o $(DBGDYN) $(LDLIBS) $(GTKLIB)
 
@@ -146,8 +146,8 @@ test:
 	@echo Running test of $(TSTEXE)
 	./$(TSTEXE) $(TSTARG)
 
-buildlibs:
-#buildlibs: buildallobjects buildarchive
+# buildlibs:
+buildlibs: buildallobjects buildarchive
 
 buildallobjects: cleanobjects
 	@echo Building object files from $(INCDIR) to $(LIBDIR)
@@ -155,9 +155,10 @@ buildallobjects: cleanobjects
 		for file in "$${array[@]}";do \
 			lib=$${file//include/lib}; \
 			lib=$${lib//.cpp/.o}; \
-			$(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(LDLIBS) $(GTKLIB); \
+			$(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(GTKLIB); \
 		done \
 	)
+# $(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(LDLIBS) $(GTKLIB); \
 
 buildarchive: cleanarchive
 	@echo Building object archive
@@ -167,7 +168,7 @@ builddirectories:
 	@echo Building project directories
 	$(shell \
 	mkdir -p $(INCDIR) $(LIBDIR) \
-	$(DBGDIR) $(TSTDIR) $(RELDIR) $(ANDDIR) \
+	$(DBGDIR) $(TSTDIR) $(RELDIR) \
 	$(DBGDYNDIR) $(DBGSTCDIR) \
 	$(RELDYNDIR) $(RELSTCDIR) \
 	$(TSTDYNDIR) $(TSTSTCDIR) \
@@ -176,6 +177,81 @@ builddirectories:
 	$(ANDSTCDIR) $(ANDSTCDIR32) \
 	$(ANDSTCDIR64) \
 	)
+
+buildalldirs: buildincdir buildlibdir builddebdir builddebdir buildreldir builddbgdyndir builddbgstcdir buildreldyndir buildrelstcdir buildtstdyndir buildtststcdir buildanddir buildanddyndir buildanddyn32dir buildanddyn64dir buildandstcdir buildandstc32dir buildandstc64dir
+	@echo Building project directories
+
+buildincdir:
+	@echo Building include directory
+	mkdir -p $(INCDIR)
+
+buildlibdir:
+	@echo Building lib directory
+	mkdir -p $(LIBDIR)
+
+builddebdir:
+	@echo Building debug directory
+	mkdir -p $(DBGDIR)
+
+buildtstdir:
+	@echo Building test directory
+	mkdir -p $(TSTDIR)
+
+buildreldir:
+	@echo Building release directories
+	mkdir -p $(RELDIR)
+
+builddbgdyndir:
+	@echo Building debug dynamic directory
+	mkdir -p $(DBGDYNDIR)
+
+builddbgstcdir:
+	@echo Building include directory
+	mkdir -p $(DBGSTCDIR)
+
+buildreldyndir:
+	@echo Building release dynamic directory
+	mkdir -p $(RELDYNDIR)
+
+buildrelstcdir:
+	@echo Building release static directory
+	mkdir -p $(RELSTCDIR)
+
+buildtstdyndir:
+	@echo Building test dynamic directory
+	mkdir -p $(TSTDYNDIR)
+
+buildtststcdir:
+	@echo Building test static directory
+	mkdir -p $(TSTSTCDIR)
+
+buildanddir:
+	@echo Building android directories
+	mkdir -p $(ANDDIR)
+
+buildanddyndir:
+	@echo Building android dynamic directories
+	mkdir -p $(ANDDYNDIR)
+
+buildanddyn32dir:
+	@echo Building android dynamic 32 directory
+	mkdir -p $(ANDDYNDIR32)
+
+buildanddyn64dir:
+	@echo Building android dynamic 64 directory
+	mkdir -p $(ANDDYNDIR64)
+
+buildandstcdir:
+	@echo Building android static directories
+	mkdir -p $(ANDSTCDIR)
+
+buildandstc32dir:
+	@echo Building android static 32 directory
+	mkdir -p $(ANDSTCDIR32)
+
+buildandstc64dir:
+	@echo Building android static 64 directory
+	mkdir -p $(ANDSTCDIR64)
 
 cleandirectories:
 	@echo Cleaning project directories

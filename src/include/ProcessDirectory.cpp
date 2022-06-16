@@ -7,6 +7,7 @@ ProcessDirectory::ProcessDirectory()
   procDir = GLOBALS::PROCDIR;
   procPath = GLOBALS::PROCPATH;
   setProcessDirectories();
+  setOtherDirectories();
 }
 
 void ProcessDirectory::setProcessDirectories()
@@ -20,10 +21,27 @@ void ProcessDirectory::setProcessDirectories()
     }
 }
 
+void ProcessDirectory::setOtherDirectories()
+{
+		for (auto const &di : std::filesystem::directory_iterator(procPath))
+		{
+      if (di.is_directory() && (!std::regex_match(di.path().filename().native().c_str(), REGEX::UINT)))
+      {
+        otherDirectories.push_back(di.path());
+      }
+    }
+}
+
 std::vector<std::filesystem::path> ProcessDirectory::getProcessDirectories(bool set_)
 {
   if (set_) setProcessDirectories();
   return processDirectories;
+}
+
+std::vector<std::filesystem::path> ProcessDirectory::getOtherDirectories(bool set_)
+{
+  if (set_) setOtherDirectories();
+  return otherDirectories;
 }
 
 std::string ProcessDirectory::getProcDir()
