@@ -12,7 +12,6 @@
 
 int main()
 {
-
 	Bench::start();
 	ProcessDirectory ProcDirs;
 	Bench::stop();
