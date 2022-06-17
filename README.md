@@ -15,6 +15,3 @@
 &nbsp;&nbsp;![colorstatic Code](https://img.shields.io/codefactor/grade/github/Lateralus138/lsproc_temp/master?style=for-the-badge)
 
 &nbsp;&nbsp;&#12;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#12;
-
-
-
