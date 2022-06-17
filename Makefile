@@ -333,3 +333,4 @@ installdynamic:
 installstatic:
 	@echo Installing $(PROJNM)
 	cp -f $(TGTSTC) /usr/bin/$(PROJNM)
+
