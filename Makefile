@@ -64,7 +64,7 @@ STFLAG = -static -static-libgcc -static-libstdc++
 
 all: releasedynamicall
 
-releasedynamicall: buildincdir buildlibdir buildreldyndir buildlibs cleanreleasedynamic
+releasedynamicall: buildincdir buildlibdir buildreldyndir cleanreleasedynamic buildlibs
 	@echo Building dynamic executable
 	$(CXX) $(GTKINC) $(LDFLAG) $(SRCFLS) -o $(TGTDYN) $(LDLIBS) $(GTKLIB)
 
@@ -126,7 +126,7 @@ debugdynamic: cleandebugdynamic builddirectories
 	@echo Building debug executable
 	$(CXX) $(GTKINC) -I$(INCDIR) $(DBGFLG) $(SRCFLS) -o $(DBGDYN) $(LDLIBS) $(GTKLIB)
 
-debugstaticall: cleandebugstatic builddirectories buildlibs
+debugstaticall: builddirectories cleandebugstatic buildlibs
 	@echo Building debug executable
 	$(CXX) $(STFLAG) $(GTKINC) -I$(INCDIR) -std=c++17 $(DBGFLG) $(SRCFLS) -o $(DBGSTC) $(LDLIBS) $(GTKLIB)
 
@@ -156,14 +156,13 @@ buildallobjects: cleanobjects
 			lib=$${file//include/lib}; \
 			lib=$${lib//.cpp/.o}; \
 			$(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(GTKLIB); \
-			strip $${lib} \
 		done \
 	)
-# $(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(LDLIBS) $(GTKLIB); \
 
 buildarchive: cleanarchive
 	@echo Building object archive
 	ar rcs $(LIBDIR)/lib$(PROJNM).a $(OBJOBJ)
+	rm -f $(OBJOBJ)
 
 builddirectories:
 	@echo Building project directories
