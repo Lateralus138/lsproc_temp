@@ -156,6 +156,7 @@ buildallobjects: cleanobjects
 			lib=$${file//include/lib}; \
 			lib=$${lib//.cpp/.o}; \
 			$(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(GTKLIB); \
+			strip $${lib} \
 		done \
 	)
 # $(CXX) $(GTKINC) $(LDFLAG) -c $${file} -o $${lib} $(LDLIBS) $(GTKLIB); \

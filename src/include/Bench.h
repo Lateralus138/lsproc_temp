@@ -21,4 +21,3 @@ namespace Bench
 };
 
 #endif
-

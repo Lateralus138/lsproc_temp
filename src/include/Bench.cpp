@@ -40,4 +40,3 @@ namespace Bench
     std::cout << pre + format_duration(start_, stop_) + post;
   }
 };
-

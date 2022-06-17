@@ -23,4 +23,3 @@ class ProcessDirectory
 };
 
 #endif
-
